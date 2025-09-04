@@ -16,6 +16,8 @@ exports.createProduct = async (req, res) => {
     }
 }
 
+// --- READ ---
+// Obtener todos los productos (GET /api/products)
 exports.getProducts = async (req, res) => { 
     try {
         const result = await db.query('SELECT * FROM products');
@@ -26,7 +28,30 @@ exports.getProducts = async (req, res) => {
     }
 }
 
-// --- READ ---
-// Obtener todos los productos (GET /api/products)
+// --- NUEVOS ENDPOINTS ---
 
+// Conteo de todos los productos (GET /api/products/count)
+exports.getProductsCount = async (req, res) => {
+    try {
+        const result = await db.query('SELECT COUNT(*) as total FROM products');
+        res.status(200).json({
+            total: parseInt(result.rows[0].total)
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error al contar los productos' });
+    }
+}
 
+// Sumatoria del costo de todos los productos (GET /api/products/total-price)
+exports.getTotalPrice = async (req, res) => {
+    try {
+        const result = await db.query('SELECT SUM(price) as total_price FROM products');
+        res.status(200).json({
+            total_price: parseFloat(result.rows[0].total_price) || 0
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Error al calcular el precio total' });
+    }
+}
