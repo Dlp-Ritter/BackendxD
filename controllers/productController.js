@@ -3,11 +3,11 @@ const db = require('../db');
 // --- CREATE ---
 // Crear un nuevo producto (POST /api/products)
 exports.createProduct = async (req, res) => {
-    const { name, description, price } = req.body;
+    const { name, description, price, category_id } = req.body;
     try {
         const result = await db.query(
-            'INSERT INTO products (name, description, price) VALUES ($1, $2, $3) RETURNING *',
-            [name, description, price]
+            'INSERT INTO products (name, description, price, category_id) VALUES ($1, $2, $3, $4) RETURNING *',
+            [name, description, price, category_id]
         );
         res.status(201).json(result.rows[0]);
     } catch (err) {
