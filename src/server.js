@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('API CRUD con PostgreSQL está funcionando!');
+  res.send('API CRUD con PostgreSQL está funcionando! Dev');
 });
 
 // Usar las rutas
